@@ -51,7 +51,8 @@ CREATE TABLE public.black_hole (
     black_hole_id integer NOT NULL,
     gravity integer,
     galaxy_id integer NOT NULL,
-    wormhole boolean DEFAULT false NOT NULL
+    wormhole boolean DEFAULT false NOT NULL,
+    name character varying(255) NOT NULL
 );
 
 
@@ -266,6 +267,9 @@ ALTER TABLE ONLY public.star ALTER COLUMN star_id SET DEFAULT nextval('public.st
 -- Data for Name: black_hole; Type: TABLE DATA; Schema: public; Owner: freecodecamp
 --
 
+INSERT INTO public.black_hole VALUES (1, 9000, 1, false, 'bh1');
+INSERT INTO public.black_hole VALUES (2, 9000, 1, true, 'bh2');
+INSERT INTO public.black_hole VALUES (3, 9000, 1, false, 'bh3');
 
 
 --
@@ -284,11 +288,7 @@ INSERT INTO public.galaxy VALUES (6, NULL, NULL, 'galaxy6', 100000);
 -- Data for Name: moon; Type: TABLE DATA; Schema: public; Owner: freecodecamp
 --
 
-INSERT INTO public.moon VALUES (1, 'Moon1', true, 2, 'Moon1');
 INSERT INTO public.moon VALUES (2, 'Moon2', false, 2, 'Moon2');
-INSERT INTO public.moon VALUES (3, 'Moon1', true, 2, 'Moon3');
-INSERT INTO public.moon VALUES (4, 'Moon1', false, 2, 'Moon4');
-INSERT INTO public.moon VALUES (5, 'Moon1', true, 2, 'Moon5');
 INSERT INTO public.moon VALUES (6, 'Luna Spectra', false, 3, 'LS-01');
 INSERT INTO public.moon VALUES (7, 'Aqua Orbis', true, 4, 'AO-02');
 INSERT INTO public.moon VALUES (8, 'Solaris Shadow', false, 5, 'SS-03');
@@ -304,6 +304,10 @@ INSERT INTO public.moon VALUES (17, 'Mystic Tide', true, 4, 'MT-18');
 INSERT INTO public.moon VALUES (18, 'Quantum Gleam', false, 4, 'QG-19');
 INSERT INTO public.moon VALUES (19, 'Echo of Silence', true, 4, 'ES-20');
 INSERT INTO public.moon VALUES (20, 'Orbiting Enigma', true, 4, 'OE-22');
+INSERT INTO public.moon VALUES (3, 'NewUniqueName', true, 2, 'Moon3');
+INSERT INTO public.moon VALUES (1, 'hyt', true, 2, 'Moon1');
+INSERT INTO public.moon VALUES (5, 'gg', true, 2, 'Moon5');
+INSERT INTO public.moon VALUES (4, 'Fak', false, 2, 'Moon4');
 
 
 --
@@ -341,7 +345,7 @@ INSERT INTO public.star VALUES (7, 6900069, 'White', 'Kepler56J', 1);
 -- Name: black_hole_black_hole_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
 --
 
-SELECT pg_catalog.setval('public.black_hole_black_hole_id_seq', 1, false);
+SELECT pg_catalog.setval('public.black_hole_black_hole_id_seq', 2, true);
 
 
 --
@@ -370,6 +374,14 @@ SELECT pg_catalog.setval('public.planet_planet_id_seq', 12, true);
 --
 
 SELECT pg_catalog.setval('public.star_star_id_seq', 7, true);
+
+
+--
+-- Name: black_hole black_hole_name_key; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.black_hole
+    ADD CONSTRAINT black_hole_name_key UNIQUE (name);
 
 
 --
@@ -402,6 +414,30 @@ ALTER TABLE ONLY public.moon
 
 ALTER TABLE ONLY public.moon
     ADD CONSTRAINT moon_pkey PRIMARY KEY (moon_id);
+
+
+--
+-- Name: galaxy name_unique_galaxy; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.galaxy
+    ADD CONSTRAINT name_unique_galaxy UNIQUE (name);
+
+
+--
+-- Name: planet name_unique_planet; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.planet
+    ADD CONSTRAINT name_unique_planet UNIQUE (name);
+
+
+--
+-- Name: star name_unique_star; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.star
+    ADD CONSTRAINT name_unique_star UNIQUE (name);
 
 
 --
@@ -447,3 +483,4 @@ ALTER TABLE ONLY public.star
 --
 -- PostgreSQL database dump complete
 --
+
